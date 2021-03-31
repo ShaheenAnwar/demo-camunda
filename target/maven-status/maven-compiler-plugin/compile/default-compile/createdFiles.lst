@@ -1,0 +1,3 @@
+com\demo\workflow\Application.class
+com\demo\workflow\VerifyLoanDelegate.class
+com\demo\workflow\LoggerDelegate.class
