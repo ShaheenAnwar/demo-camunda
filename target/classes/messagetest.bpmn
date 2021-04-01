@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.5.0">
+  <bpmn:process id="MESSAGETEST" isExecutable="true">
+    <bpmn:sendTask id="Activity_14354po" name="SendMessage1" camunda:asyncBefore="true" camunda:delegateExpression="${mySendTaskDelegate}">
+      <bpmn:incoming>Flow_163uvxp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nq8kmt</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:startEvent id="Event_1ciiwl4" name="start101">
+      <bpmn:outgoing>Flow_0prktz2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0prktz2" sourceRef="Event_1ciiwl4" targetRef="Activity_0w3chsb" />
+    <bpmn:scriptTask id="Activity_0w3chsb" name="test script before send" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0prktz2</bpmn:incoming>
+      <bpmn:outgoing>Flow_163uvxp</bpmn:outgoing>
+      <bpmn:script>print("befor sending message");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0fsyvb2">
+      <bpmn:incoming>Flow_0nq8kmt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0nq8kmt" sourceRef="Activity_14354po" targetRef="Event_0fsyvb2" />
+    <bpmn:sequenceFlow id="Flow_163uvxp" sourceRef="Activity_0w3chsb" targetRef="Activity_14354po" />
+    <bpmn:endEvent id="Event_0hslptm" name="">
+      <bpmn:incoming>Flow_0hl6pdt</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1rgpzyr" sourceRef="Activity_01s2am4" targetRef="Activity_152ohd9" />
+    <bpmn:scriptTask id="Activity_01s2am4" name="Script Test" scriptFormat="javascript">
+      <bpmn:incoming>Flow_0bow0sz</bpmn:incoming>
+      <bpmn:incoming>Flow_1r80glr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rgpzyr</bpmn:outgoing>
+      <bpmn:script>print("after receive task");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0bow0sz" sourceRef="JobStartMsgEvent" targetRef="Activity_01s2am4" />
+    <bpmn:startEvent id="JobStartMsgEvent" name="New Job Application Received">
+      <bpmn:outgoing>Flow_0bow0sz</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1q50dqx" messageRef="Message_1v3cauh" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0hl6pdt" sourceRef="Activity_152ohd9" targetRef="Event_0hslptm" />
+    <bpmn:userTask id="Activity_152ohd9" name="User Task1">
+      <bpmn:incoming>Flow_1rgpzyr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hl6pdt</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1r80glr" sourceRef="Event_1wdhu90" targetRef="Activity_01s2am4" />
+    <bpmn:boundaryEvent id="Event_1wdhu90" name="CondEvent1" attachedToRef="Activity_152ohd9">
+      <bpmn:outgoing>Flow_1r80glr</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1ry8gro" camunda:variableName="Cond Event1">
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">#{true}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:error id="Error_0m44m8k" name="Error_1njbs37" camunda:errorMessage="Insufficient Information" />
+  <bpmn:error id="Error_0g45s1b" name="Error_2dce6qn" errorCode="IncompleteInfoError" camunda:errorMessage="Insufficient Information" />
+  <bpmn:message id="Message_1v3cauh" name="TEST_MESSAGE" />
+  <bpmn:message id="Message_02ld1p6" name="MessageReceivedTask" />
+  <bpmn:message id="Message_1houjtx" name="Message_1u96j99" />
+  <bpmn:message id="Message_1xx1yzo" name="MessageReceivedTaskShaheen" />
+  <bpmn:message id="Message_1xolwdr" name="MessageReceivedTaskShaheen" />
+  <bpmn:message id="Message_11o39zk" name="MessageReceivedTaskShaheen" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MESSAGETEST">
+      <bpmndi:BPMNEdge id="Flow_0bow0sz_di" bpmnElement="Flow_0bow0sz">
+        <di:waypoint x="238" y="117" />
+        <di:waypoint x="310" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0prktz2_di" bpmnElement="Flow_0prktz2">
+        <di:waypoint x="238" y="300" />
+        <di:waypoint x="320" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nq8kmt_di" bpmnElement="Flow_0nq8kmt">
+        <di:waypoint x="630" y="300" />
+        <di:waypoint x="722" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_163uvxp_di" bpmnElement="Flow_163uvxp">
+        <di:waypoint x="420" y="300" />
+        <di:waypoint x="530" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rgpzyr_di" bpmnElement="Flow_1rgpzyr">
+        <di:waypoint x="410" y="117" />
+        <di:waypoint x="520" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hl6pdt_di" bpmnElement="Flow_0hl6pdt">
+        <di:waypoint x="620" y="117" />
+        <di:waypoint x="722" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r80glr_di" bpmnElement="Flow_1r80glr">
+        <di:waypoint x="570" y="175" />
+        <di:waypoint x="570" y="195" />
+        <di:waypoint x="360" y="195" />
+        <di:waypoint x="360" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1ciiwl4_di" bpmnElement="Event_1ciiwl4">
+        <dc:Bounds x="202" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="200" y="325" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hslptm_di" bpmnElement="Event_0hslptm">
+        <dc:Bounds x="722" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="731" y="142" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fsyvb2_di" bpmnElement="Event_0fsyvb2">
+        <dc:Bounds x="722" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ab41ya_di" bpmnElement="JobStartMsgEvent">
+        <dc:Bounds x="202" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="194" y="142" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_14354po_di" bpmnElement="Activity_14354po">
+        <dc:Bounds x="530" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1asfczq_di" bpmnElement="Activity_0w3chsb">
+        <dc:Bounds x="320" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1o0wq6l_di" bpmnElement="Activity_01s2am4">
+        <dc:Bounds x="310" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tfu8cg_di" bpmnElement="Activity_152ohd9">
+        <dc:Bounds x="520" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h70p3i_di" bpmnElement="Event_1wdhu90">
+        <dc:Bounds x="552" y="139" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="541" y="182" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
