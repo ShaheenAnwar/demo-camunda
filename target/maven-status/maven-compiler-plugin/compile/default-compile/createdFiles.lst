@@ -1,0 +1,4 @@
+com\demo\workflow\Application.class
+com\demo\workflow\AnswerDelegate.class
+com\demo\workflow\SetVariableDelegate.class
+com\demo\workflow\LoggerDelegate.class

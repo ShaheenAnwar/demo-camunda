@@ -1,0 +1,78 @@
+/* Process.bpmn and AnswerRequestedProcess.bpmn files*/
+
+Camunda End-point URL for Post Request using Postman:
+    http://localhost:8062/engine-rest/message
+
+/**payload to send with Post request from Postman: (Select Body -> raw -> JSON Option)*/
+
+    {
+      "messageName" : "QuestionAsked",
+      "businessKey" : "1",
+      "processVariables" : {
+        "question" : {"value" : "aNewValue", "type": "String"
+                     }
+      }
+    }
+
+/* QuestionAsked is message Name of message start event.
+   question is variable in Delegate class.
+    we will get response 204 No Content*/
+
+/*use the same url to start message event with below payload*/
+{
+  "messageName" : "AnswerAvailable",
+  "businessKey" : "1",
+  "processVariables" : {
+    "answer" : {"value" : "Your answer is...", "type": "String"
+                 }
+  }
+}
+
+/*use the same url to start message boundary event with below payload*/
+{
+    "messageName": "QuestionEditedMsg",
+    "businessKey": "1",
+    "processVariables": {
+        "question2": {
+            "value": "This is new question...",
+            "type": "String"
+        }
+    }
+}
+/*A new process will be created. In task list open the first question then complete. It will terminate new task also*/
+
+/*again create few QuestionAsked tasks and also create "NoAnswer" msg event task with below payload*/
+{
+    "messageName": "NoAnswer",
+    "businessKey": "2"
+}
+
+/*to start signal event put signal end-point with url*/
+    http://localhost:8062/engine-rest/signal
+
+    {
+        "name": "UrgentWorkSignal",
+        "variables": {
+            "newTimePeriodInMonth": {
+                "value": 24
+            }
+        }
+    }
+
+
+
+/*https://www.youtube.com/watch?v=8SYEc3dHnM4*/
+
+/** eventProcess1.bpmn and AnswerRequestedProcess.bpmn files*/
+/*https://www.youtube.com/watch?v=gFY1UuiCVl4*/
+
+To Start Mail Arrived msg event:
+    Send a Post request with below url and payload:
+        http://localhost:8062/engine-rest/message
+
+    (Headers -> Content Type -> App/JSON)
+    (Body->Raw->JSON)
+        {
+            "messageName": "MessageArrivedEvent1",
+            "businessKey": "1"
+        }
